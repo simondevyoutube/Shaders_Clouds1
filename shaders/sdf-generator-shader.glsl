@@ -12,7 +12,6 @@ float GenerateGridClouds(vec3 coords, float seed, float CELL_WIDTH) {
   vec3 cloudPosition = vec3(0.0);
 
   cloudPosition.xy += cellHashValue.xy;
-  // cloudPosition.z += cellHashValue.z * 0.1;
 
   return sdfSphere(cellCoords - cloudPosition, radius);
 }
@@ -125,11 +124,6 @@ void main() {
   float v2 = smoothstep(0.5, 0.3, abs(vUvs.y - 0.5));
   float v3 = smoothstep(16.0, 12.0, abs(zLevel - 16.0));
   float v = v1 * v2 * v3;
-  // v = pow(v, 2.0);
-  // res *= v;
-
-// float mult = 7.0;
-// res =  1.0 - voronoiSlow(vec3(pos.xy, 0.0) * mult, 0.5, mult, 1.0, 0.0, -1.0);
 
   gl_FragColor = vec4(res);
 }

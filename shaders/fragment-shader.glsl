@@ -67,7 +67,7 @@ float SampleLowResolutionCloudMap(vec3 p) {
 float SampleHighResolutionCloudDetail(float cloudSDF, vec3 worldPos, vec3 cameraOrigin, float curTime) {
   float cloud = circularOut(linearstep(0.0, -CLOUD_FALLOFF, cloudSDF)) * 0.85;
 
-  if(cloud > 0.0){
+  if(cloud > 0.0) {
     vec3 samplePos = worldPos + vec3(-2.0 * curTime, 0.0, curTime) * 1.5;
 
     float shapeSize = 0.4;
@@ -76,7 +76,7 @@ float SampleHighResolutionCloudDetail(float cloudSDF, vec3 worldPos, vec3 camera
     float shapeStrength = CLOUD_BASE_STRENGTH;
     cloud = saturate(remap(cloud, shapeStrength * perlinWorleySample.x, 1.0, 0.0, 1.0));
 
-    if(cloud > 0.0){
+    if(cloud > 0.0) {
       float distToSample = distance(cameraOrigin, worldPos);
       float t_detailDropout = smoothstep(1000.0, 800.0, distToSample);
 
@@ -110,14 +110,14 @@ vec3 MultipleOctaveScattering(float density, float mu) {
   vec3 luminance = vec3(0.0);
 
   for (float i = 0.0; i < scatteringOctaves; i++) {
-      float phaseFunction = PhaseFunction(0.3 * c, mu);
-      vec3 beers = exp(-density * EXTINCTION_MULT * a);
+    float phaseFunction = PhaseFunction(0.3 * c, mu);
+    vec3 beers = exp(-density * EXTINCTION_MULT * a);
 
-      luminance += b * phaseFunction * beers;
+    luminance += b * phaseFunction * beers;
 
-      a *= attenuation;
-      b *= contribution;
-      c *= (1.0 - phaseAttenuation);
+    a *= attenuation;
+    b *= contribution;
+    c *= (1.0 - phaseAttenuation);
   }
   return luminance;
 }
@@ -209,12 +209,10 @@ ScatteringTransmittance CloudMarch(vec2 pixelCoords, vec3 cameraOrigin, vec3 cam
     float cloudMapSDFSample = SampleLowResolutionCloudMap(samplePos);
 
     float currentStepLength = cloudMapSDFSample;
-    // float currentStepLength = lqStepLength;
 
     if (hqMarcherCountdown <= 0) {
       if (cloudMapSDFSample < hqStepLength) {
         // Hit some clouds, step back
-        // distTravelled = (distTravelled - currentStepLength) + hqStepLength;
         hqMarcherCountdown = NUM_COUNT;
 
         distTravelled += hqStepLength * blueNoiseSample;
@@ -260,7 +258,7 @@ ScatteringTransmittance CloudMarch(vec2 pixelCoords, vec3 cameraOrigin, vec3 cam
 }
 
 
-float RenderGlow(float dist, float radius, float intensity){
+float RenderGlow(float dist, float radius, float intensity) {
   dist = max(dist, 1e-6);
 	return (1.0 - exp(-25.0 * (radius / dist))) * 0.1 + (1.0 - exp(-0.05 * (radius / dist) * (radius / dist))) * 2.0;
 }

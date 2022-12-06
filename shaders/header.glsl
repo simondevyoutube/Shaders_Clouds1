@@ -9,8 +9,8 @@ varying vec2 vUvs;
 uniform vec2 resolution;
 uniform float time;
 uniform int frame;
-uniform sampler2D blueNoise;
 
+uniform sampler2D blueNoise;
 uniform sampler3D perlinWorley;
 
 
